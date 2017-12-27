@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using VSBooking_JAZS_MVC.Models;
 
-namespace VSBooking_JAZS_MVC.Models
+namespace VSBooking_JAZS_MVC.ViewModels
 {
     public class Search
     {
