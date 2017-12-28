@@ -22,3 +22,22 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.result-img {
+    height: 120px;
+}
+
+.room-img {
+    height: 300px;
+    padding: 20px 10px 50px 10px;
+}
+
+.block-div {
+    display: inline-block;
+    padding:  5px 5px 20px 5px;
+
+}
+
+.fa-fa-bed {
+    padding-right: 5px;
+}

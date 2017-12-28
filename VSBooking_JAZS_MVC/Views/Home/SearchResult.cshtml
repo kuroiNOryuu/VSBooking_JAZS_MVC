@@ -4,7 +4,7 @@
     ViewBag.Title = "SearchResult";
 }
 
-<h2><i class="fa fa-bed"></i>   Available rooms</h2>
+<h2><i class="fa fa-bed"></i> Available rooms</h2>
 
 @using (Html.BeginForm())
 {
@@ -23,9 +23,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Number)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Type)
@@ -65,9 +62,6 @@
                     @Html.DisplayFor(modelItem => item.Number)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
                 <td>
@@ -83,10 +77,10 @@
                     @Html.DisplayFor(modelItem => item.HasParking)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price)
+                    @Html.DisplayFor(modelItem => item.Price) CHF
                 </td>
                 <td>
-                    @Html.ActionLink("RoomDetails", "RoomDetails", new { id=item.IdRoom })
+                    @Html.ActionLink("Details", "RoomDetails", new { id=item.IdRoom })
                 </td>
             </tr>
         }

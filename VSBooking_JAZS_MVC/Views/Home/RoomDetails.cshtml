@@ -4,102 +4,65 @@
     ViewBag.Title = "RoomDetails";
 }
 
-<h2>Room details</h2>
+<h2>@Html.DisplayFor(model => model.HotelName) - @Html.DisplayFor(model => model.Location)</h2>
 
 <div>
-    <h4>SearchResult</h4>
+    <h4>Room #@Html.DisplayFor(model => model.Number) - @Html.DisplayFor(model => model.Type)</h4>
+    <h4>Price : @Html.DisplayFor(model => model.Price) CHF</h4>
+        
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Book this room" class="btn btn-default" />
+        </div>
+    </div> 
+
     <hr />
+    
+    @foreach (var item in Model.Pictures)
+    {
+        <div class="col-sm-4">
+            <img class="room-img" src=" @Url.Content(item.Url)" alt="Image" />
+        </div>
+    }
+
     <div>
-        @foreach (var item in Model.Pictures)
-        {
-            <img src="@Url.Content(item.Url)" alt="Image" />
-        }
+        <h4>@Html.DisplayNameFor(model => model.Description)</h4>
+        <p>@Html.DisplayFor(model => model.Description)</p>
+        
+        <div class="block-div">
+            @Html.DisplayNameFor(model => model.HasTV)
+        </div>
+
+        <div class="block-div">
+            @Html.DisplayFor(model => model.HasTV)
+        </div>
+
+        <div class="block-div">
+            @Html.DisplayNameFor(model => model.HasHairDryer)
+        </div>
+
+        <div class="block-div">
+            @Html.DisplayFor(model => model.HasHairDryer)
+        </div>
+
+        <div class="block-div">
+            @Html.DisplayNameFor(model => model.HasWiFi)
+        </div>
+
+        <div class="block-div">
+            @Html.DisplayFor(model => model.HasWiFi)
+        </div>
+
+        <div class="block-div">
+            @Html.DisplayNameFor(model => model.HasParking)
+        </div>
+
+        <div class="block-div">
+            @Html.DisplayFor(model => model.HasParking)
+        </div>
         
     </div>
-    <dl class="dl-horizontal">
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Number)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Number)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HasTV)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HasTV)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HasHairDryer)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HasHairDryer)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HasWiFi)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HasWiFi)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HasParking)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HasParking)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HotelName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HotelName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-
-    </dl>
 </div>
 <p>
-    @Html.ActionLink("Back to List", "SearchResult")
+    @Html.ActionLink("Back to results", "SearchResult")
 </p>
