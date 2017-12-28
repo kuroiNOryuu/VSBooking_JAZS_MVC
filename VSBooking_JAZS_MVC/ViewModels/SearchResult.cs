@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using VSBooking_JAZS_MVC.Models;
 
 namespace VSBooking_JAZS_MVC.ViewModels
 {
@@ -19,6 +20,6 @@ namespace VSBooking_JAZS_MVC.ViewModels
         public bool HasParking { get; set; }
         public string HotelName { get; set; }
         public string Location { get; set; }
-
+        public IEnumerable<Picture> Pictures { get; set; }
     }
 }

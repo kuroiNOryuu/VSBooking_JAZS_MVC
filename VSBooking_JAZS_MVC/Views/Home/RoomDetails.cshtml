@@ -1,0 +1,105 @@
+﻿@model VSBooking_JAZS_MVC.ViewModels.SearchResult
+
+@{
+    ViewBag.Title = "RoomDetails";
+}
+
+<h2>Room details</h2>
+
+<div>
+    <h4>SearchResult</h4>
+    <hr />
+    <div>
+        @foreach (var item in Model.Pictures)
+        {
+            <img src="@Url.Content(item.Url)" alt="Image" />
+        }
+        
+    </div>
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasTV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasTV)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasHairDryer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasHairDryer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasWiFi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasWiFi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasParking)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasParking)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HotelName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HotelName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "SearchResult")
+</p>
