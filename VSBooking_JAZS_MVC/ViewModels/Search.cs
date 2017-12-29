@@ -11,9 +11,6 @@ namespace VSBooking_JAZS_MVC.ViewModels
     {
         public Hotel Hotel { get; set; }
         public Room Room { get; set; }
-        [Display(Name = "Start date")]
-        public DateTime StartDate { get; set; }
-        [Display(Name = "End date")]
-        public DateTime EndDate { get; set; }
+        public Reservation Reservation { get; set; }
     }
 }

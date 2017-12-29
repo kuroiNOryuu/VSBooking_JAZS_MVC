@@ -10,6 +10,10 @@ namespace VSBooking_JAZS_MVC.ViewModels
     public class SearchResult
     {
         public bool Book { get; set; }
+        /*public Room Room { get; set; }
+        public Hotel Hotel { get; set; }
+        public Reservation Reservation { get; set; }*/
+
         public int IdRoom { get; set; }
         public int Number { get; set; }
         public string Description { get; set; }

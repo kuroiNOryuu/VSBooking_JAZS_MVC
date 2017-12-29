@@ -19,6 +19,7 @@ namespace VSBooking_JAZS_MVC.Models
         public bool HasHairDryer { get; set; }
         public int IdHotel { get; set; }
         public int IdReservation { get; set; }
+        public Hotel Hotel { get; set; }
         public IEnumerable<Picture> Pictures { get; set; }
         public IEnumerable<Reservation> Reservations { get; set; }
     }
