@@ -6,7 +6,7 @@
 
 <h2><i class="fa fa-bed"></i> Available rooms</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("ResSummary", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
