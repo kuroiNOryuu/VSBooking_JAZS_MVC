@@ -136,7 +136,7 @@ namespace VSBooking_JAZS_MVC.Controllers
         }
 
         /* Page displaying a summary for the reservation of several rooms */
-        public ActionResult ResSummary(List<SearchResult> searchResults)
+        public ActionResult MultipleResSummary(List<SearchResult> searchResults)
         {
             List<SearchResult> rooms = new List<SearchResult>();
             List<Picture> pictures = new List<Picture>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VSBooking_JAZS_MVC.ViewModels.SearchResult>
+﻿@model IList<VSBooking_JAZS_MVC.ViewModels.SearchResult>
 
 @{
     ViewBag.Title = "SearchResult";
@@ -6,81 +6,88 @@
 
 <h2><i class="fa fa-bed"></i> Available rooms</h2>
 
-@using (Html.BeginForm("ResSummary", "Home", FormMethod.Post))
+@using (Html.BeginForm("MultipleResSummary", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <table class="table">
         <tr>
+            <th></th>
             <th>
-                @Html.DisplayName("")
+                @Html.DisplayName("Hotel")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HotelName)
+                @Html.DisplayName("Location")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Location)
+                @Html.DisplayName("Number")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Number)
+                @Html.DisplayName("Type")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayName("TV")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HasTV)
+                @Html.DisplayName("Hair dryer")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HasHairDryer)
+                @Html.DisplayName("WiFi")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HasWiFi)
+                @Html.DisplayName("Parking")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HasParking)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayName("Price")
             </th>
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
+        @for (int i = 0; i < Model.Count(); i++)
         {
             <tr>
-                @Html.HiddenFor(modelItem => item.IdRoom)
+                @Html.HiddenFor(modelItem => Model.ElementAt(i).IdRoom)
                 <td>
-                    @Html.EditorFor(modelItem => item.Book)
+                    @Html.CheckBoxFor(modelItem => Model.ElementAt(i).Book)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.HotelName)
+                    @Html.HiddenFor(modelItem => Model.ElementAt(i).HotelName)
+                    @Html.DisplayFor(modelItem => Model.ElementAt(i).HotelName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Location)
+                    @Html.HiddenFor(modelItem => Model.ElementAt(i).Location)
+                    @Html.DisplayFor(modelItem => Model.ElementAt(i).Location)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Number)
+                    @Html.HiddenFor(modelItem => Model.ElementAt(i).Number)
+                    @Html.DisplayFor(modelItem => Model.ElementAt(i).Number)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Type)
+                    @Html.HiddenFor(modelItem => Model.ElementAt(i).Type)
+                    @Html.DisplayFor(modelItem => Model.ElementAt(i).Type)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.HasTV)
+                    @Html.HiddenFor(modelItem => Model.ElementAt(i).HasTV)
+                    @Html.DisplayFor(modelItem => Model.ElementAt(i).HasTV)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.HasHairDryer)
+                    @Html.HiddenFor(modelItem => Model.ElementAt(i).HasHairDryer)
+                    @Html.DisplayFor(modelItem => Model.ElementAt(i).HasHairDryer)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.HasWiFi)
+                    @Html.HiddenFor(modelItem => Model.ElementAt(i).HasWiFi)
+                    @Html.DisplayFor(modelItem => Model.ElementAt(i).HasWiFi)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.HasParking)
+                    @Html.HiddenFor(modelItem => Model.ElementAt(i).HasParking)
+                    @Html.DisplayFor(modelItem => Model.ElementAt(i).HasParking)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price) CHF
+                    @Html.HiddenFor(modelItem => Model.ElementAt(i).Price)
+                    @Html.DisplayFor(modelItem => Model.ElementAt(i).Price) CHF
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "RoomDetails", new { id=item.IdRoom })
+                    @Html.ActionLink("Details", "RoomDetails", new { id= Model.ElementAt(i).IdRoom })
                 </td>
             </tr>
         }
