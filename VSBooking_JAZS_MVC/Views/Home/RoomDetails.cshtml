@@ -9,11 +9,12 @@
 @using (Html.BeginForm("ResSummary", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
+    
 <div>
     <h4>Room #@Html.DisplayFor(model => model.Number) - @Html.DisplayFor(model => model.Type)</h4>
     <h4>Price : @Html.DisplayFor(model => model.Price) CHF</h4>
 
-    @Html.ActionLink("Book this room", "ResSummary", new { id = Model.IdRoom })
+    @Html.ActionLink("Book this room", "SingleResSummary", new { id = Model.IdRoom })
 
     <hr />
 
@@ -61,11 +62,6 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            <input type="submit" value="Book" class="btn btn-default" />
-        </div>
-    </div>
 </div>
 }
 <p>

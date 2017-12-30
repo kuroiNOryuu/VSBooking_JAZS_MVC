@@ -201,7 +201,7 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\SearchResult.cshtml" />
     <Content Include="Views\Home\RoomDetails.cshtml" />
-    <Content Include="Views\Home\ResSummary.cshtml" />
+    <Content Include="Views\Home\SingleResSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

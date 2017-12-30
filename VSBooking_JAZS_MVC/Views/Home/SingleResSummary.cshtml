@@ -1,0 +1,101 @@
+﻿@model VSBooking_JAZS_MVC.ViewModels.SearchResult
+
+@{
+    ViewBag.Title = "SingleResSummary";
+}
+
+
+<div class="form-group">
+    <div class="col-md-10">
+        <h2><i class="fa fa-book"></i> Reservation summary</h2>
+    </div>
+    <div class="col-md-2">
+        <input type="submit" value="Confirm reservation" class="btn btn-default" />
+    </div>
+</div>
+
+@using (Html.BeginForm("ResConfirmation", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.HasTV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasWiFi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasParking)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasHairDryer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Type)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.HasTV)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.HasHairDryer)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.HasWiFi)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.HasParking)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Price) CHF
+            </td>
+            <td>
+                @Html.ActionLink("Cancel", "RoomDetails", new { id = Model.IdRoom })
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                Total price :
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Price) CHF
+            </td>
+        </tr>
+
+    </table>
+    <br/>
+}
