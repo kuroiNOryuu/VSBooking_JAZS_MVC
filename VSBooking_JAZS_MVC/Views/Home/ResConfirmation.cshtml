@@ -1,0 +1,72 @@
+﻿@model VSBooking_JAZS_MVC.ViewModels.ReservationVM
+
+@{
+    ViewBag.Title = "ResConfirmation";
+}
+
+<h2>Reservation confirmation</h2>
+<p>Dear @Html.DisplayFor(model => model.Firstname) @Html.DisplayFor(model => model.Lastname),</p>
+<p>you have succesfully reserved the following room(s) :</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(modelItem => Model.Rooms.ElementAt(0).Hotel.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(modelItem => Model.Rooms.ElementAt(0).Hotel.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(modelItem => Model.Rooms.ElementAt(0).Price)
+        </th>
+        <th></th>
+    </tr>
+
+    @for (int i = 0; i < Model.Rooms.Count(); i++)
+    {
+        <tr>
+
+            @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).IdRoom)
+
+            <td>
+                @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Number)
+                @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Number)
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Type)
+                @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Type)
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Name)
+                @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Name)
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Location)
+                @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Location)
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Price)
+                @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Price)
+            </td>
+        </tr>
+    }
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            Total price :
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.TotalPrice) CHF
+        </td>
+    </tr>
+
+</table>

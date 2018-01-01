@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace VSBooking_JAZS_MVC.Models
+﻿namespace VSBooking_JAZS_MVC.Models
 {
     public class Picture
     {
