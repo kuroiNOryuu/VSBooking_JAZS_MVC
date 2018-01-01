@@ -6,6 +6,6 @@ namespace VSBooking_JAZS_MVC.ViewModels
     {
         public Hotel Hotel { get; set; }
         public Room Room { get; set; }
-        public ReservationVM Reservation { get; set; }
+        public Reservation Reservation { get; set; }
     }
 }

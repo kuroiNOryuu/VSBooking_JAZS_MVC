@@ -6,17 +6,16 @@
 
 <h2>@Html.DisplayFor(model => model.HotelName) - @Html.DisplayFor(model => model.Location)</h2>
 
+<h4>@Html.DisplayFor(model => model.Phone)</h4>
+<a href="@Html.DisplayFor(model => model.Email)">@Html.DisplayFor(model => model.Email)</a>
+<a href="@Html.DisplayFor(model => model.Website)">@Html.DisplayFor(model => model.Website)</a>
+<hr />
+
 @using (Html.BeginForm("ResSummary", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     
 <div>
-    <h4>Room #@Html.DisplayFor(model => model.Number) - @Html.DisplayFor(model => model.Type)</h4>
-    <h4>Price : @Html.DisplayFor(model => model.Price) CHF</h4>
-
-    @Html.ActionLink("Book this room", "SingleResSummary", new { id = Model.IdRoom })
-
-    <hr />
 
     @foreach (var item in Model.Pictures)
     {
@@ -26,8 +25,8 @@
     }
 
     <div>
-        <h4>@Html.DisplayNameFor(model => model.Description)</h4>
-        <p>@Html.DisplayFor(model => model.Description)</p>
+        <p><b>Room #@Html.DisplayFor(model => model.Number) - @Html.DisplayFor(model => model.Type)</b></p>
+        <p>@Html.DisplayFor(model => model.Description)</p>        
 
         <div class="block-div">
             @Html.DisplayNameFor(model => model.HasTV)
@@ -60,10 +59,11 @@
         <div class="block-div">
             @Html.DisplayFor(model => model.HasParking)
         </div>
+        <p><b>Price : @Html.DisplayFor(model => model.Price) CHF</b></p>
     </div>
 
 </div>
 }
 <p>
-    @Html.ActionLink("Back to results", "SearchResult")
+    @Html.ActionLink("Back to results", "SearchResult") | @Html.ActionLink("Book this room", "SingleResSummary", new { id = Model.IdRoom })
 </p>
