@@ -20,26 +20,26 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Reservation.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Reservation.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Reservation.StartDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Reservation.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Reservation.EndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Reservation.EndDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Hotel.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Hotel.Location, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Hotel.Location, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -47,41 +47,41 @@
 
         <div id="advancedSearch" style="display:none;">
             <div class="form-group">
-                @Html.LabelFor(model => model.Room.HasTV, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.HasTV, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="checkbox">
-                        @Html.EditorFor(model => model.Room.HasTV)
-                        @Html.ValidationMessageFor(model => model.Room.HasTV, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.HasTV)
+                        @Html.ValidationMessageFor(model => model.HasTV, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Room.HasHairDryer, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.HasHairDryer, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="checkbox">
-                        @Html.EditorFor(model => model.Room.HasHairDryer)
-                        @Html.ValidationMessageFor(model => model.Room.HasHairDryer, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.HasHairDryer)
+                        @Html.ValidationMessageFor(model => model.HasHairDryer, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Hotel.HasWiFi, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.HasWiFi, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="checkbox">
-                        @Html.EditorFor(model => model.Hotel.HasWiFi)
-                        @Html.ValidationMessageFor(model => model.Hotel.HasWiFi, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.HasWiFi)
+                        @Html.ValidationMessageFor(model => model.HasWiFi, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Hotel.HasParking, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.HasParking, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="checkbox">
-                        @Html.EditorFor(model => model.Hotel.HasParking)
-                        @Html.ValidationMessageFor(model => model.Hotel.HasParking, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.HasParking)
+                        @Html.ValidationMessageFor(model => model.HasParking, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>

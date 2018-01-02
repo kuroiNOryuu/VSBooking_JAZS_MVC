@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -13,6 +13,7 @@ namespace VSBooking_JAZS_MVC.Controllers
 {
     public class HomeController : Controller
     {
+        string baseURI = "http://localhost:49962/api/Rooms/";
         string singleRoom = "Single room";
         string doubleRoom = "Double room";
 
@@ -33,8 +34,19 @@ namespace VSBooking_JAZS_MVC.Controllers
         /* Page displaying the search results */
         public ActionResult SearchResult(Search search)
         {
-            // Get the list of all rooms at api/Rooms
-            List<Room> rooms = RoomAsync.getRooms();
+            List<Room> rooms = new List<Room>();
+            // Get the list of available rooms
+            if (search.HasHairDryer == false && search.HasParking == false && search.HasTV == false && search.HasWiFi == false)
+            {
+                // Normal search
+                rooms = getRoomsByDateAndLocation(search.StartDate, search.EndDate, search.Location);
+            }
+
+            else
+            {
+                // Advanced search
+                //rooms = method to add here
+            }
 
             // Put data into view model
             List<SearchResult> results = new List<SearchResult>();
@@ -60,13 +72,16 @@ namespace VSBooking_JAZS_MVC.Controllers
                     HasParking = r.Hotel.HasParking,
                     HotelName = r.Hotel.Name,
                     Location = r.Hotel.Location,
-                    Pictures = r.Picture
+                    Pictures = r.Picture,
+                    Search = search
                 });
             }
 
             SearchResultsVM resultsVM = new SearchResultsVM()
             {
-                SearchResult = results
+                SearchResult = results,
+                StartDate = search.StartDate,
+                EndDate = search.EndDate
             };
             
 
@@ -74,7 +89,7 @@ namespace VSBooking_JAZS_MVC.Controllers
         }
 
         /* Page displaying the details for selected room */
-        public ActionResult RoomDetails(int id)
+        public ActionResult RoomDetails(int id, Search search)
         {
             List<Picture> pictures = new List<Picture>
             {
@@ -84,7 +99,7 @@ namespace VSBooking_JAZS_MVC.Controllers
             };           
 
             // Get room by id
-            Room room = RoomAsync.getRoomById(id);
+            Room room = getRoomById(id);
 
             string type;
             if (room.Type == 1)
@@ -92,6 +107,7 @@ namespace VSBooking_JAZS_MVC.Controllers
             else
                 type = doubleRoom;
 
+            // Put data into view model
             SearchResult result = new SearchResult
             {
                 IdRoom = room.IdRoom,
@@ -108,7 +124,8 @@ namespace VSBooking_JAZS_MVC.Controllers
                 Phone = room.Hotel.Phone,
                 Email = room.Hotel.Email,
                 Website = room.Hotel.Website,
-                Pictures = pictures
+                Pictures = pictures,
+                Search = search
             };
 
             if (result == null)
@@ -130,9 +147,10 @@ namespace VSBooking_JAZS_MVC.Controllers
             };
 
             // Get room by id
-            Room room = RoomAsync.getRoomById(id);
+            Room room = getRoomById(id);
             room.Picture = pictures;
 
+            // Put data into view model
             List<Room> rooms = new List<Room> { room };
 
             string type;
@@ -163,10 +181,13 @@ namespace VSBooking_JAZS_MVC.Controllers
             foreach(SearchResult r in searchResults.SearchResult)
             {
                 if (r.Book == true)
-                    rooms.Add(RoomAsync.getRoomById(r.IdRoom));
+                    rooms.Add(getRoomById(r.IdRoom));
             }
-                decimal totalPrice = 0;
 
+            // Get total price
+            decimal totalPrice = 0;
+
+            // Put data into view model
             foreach (Room r in rooms)
                 totalPrice += r.Price;
 
@@ -184,12 +205,14 @@ namespace VSBooking_JAZS_MVC.Controllers
             List<Room> rooms = new List<Room>();
             decimal totalPrice = 0;
 
+            // Get reserved rooms
             for(int i = 0; i < reservation.Rooms.Count; i++)
             {
-                rooms.Add(RoomAsync.getRoomById(reservation.Rooms[i].IdRoom));
+                rooms.Add(getRoomById(reservation.Rooms[i].IdRoom));
                 totalPrice += rooms[i].Price;
             }
 
+            // Put data into view model
             ReservationVM result = new ReservationVM
             {
                 Rooms = rooms,
@@ -199,6 +222,58 @@ namespace VSBooking_JAZS_MVC.Controllers
             };
 
             return View(result);
+        }
+
+        //=========================================================================================================================
+
+        // Get a list of rooms
+        public List<Room> getRooms()
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            Task<string> response = client.GetStringAsync(baseURI);
+            List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(response.Result);
+
+            return rooms;
+        }
+
+        // Get one room by its id
+        public Room getRoomById(int id)
+        {
+            string path = baseURI + "/" + id;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            Task<string> response = client.GetStringAsync(path);
+            Room room = JsonConvert.DeserializeObject<Room>(response.Result);
+
+            return room;
+        }
+
+        // Get the list of available rooms by dates and location
+        public List<Room> getRoomsByDateAndLocation(DateTime startDate, DateTime endDate, string location)
+        {
+            string path = baseURI + "?location=" + location + "&start=" + startDate + "&end=" + endDate;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            Task<string> response = client.GetStringAsync(path);
+            List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(response.Result);
+
+            return rooms;
+        }
+
+        // Create a reservation for one room
+        public void addReservation(Reservation reservation)
+        {
+
         }
     }
 }

@@ -15,6 +15,6 @@ namespace VSBooking_JAZS_MVC.Models
         public DateTime StartDate { get; set; }
         [Display(Name = "End date")]
         public DateTime EndDate { get; set; }
-        public IEnumerable<Room> Rooms { get; set; }
+        public IList<Room> Rooms { get; set; }
     }
 }

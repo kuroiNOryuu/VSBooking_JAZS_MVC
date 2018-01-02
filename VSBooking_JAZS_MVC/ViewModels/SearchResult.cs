@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using VSBooking_JAZS_MVC.Models;
 
@@ -28,5 +29,6 @@ namespace VSBooking_JAZS_MVC.ViewModels
         public string Website { get; set; }
         public string Location { get; set; }
         public IEnumerable<Picture> Pictures { get; set; }
+        public Search Search { get; set; }
     }
 }

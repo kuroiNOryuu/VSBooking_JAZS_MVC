@@ -1,11 +1,26 @@
-﻿using VSBooking_JAZS_MVC.Models;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace VSBooking_JAZS_MVC.ViewModels
 {
     public class Search
     {
-        public Hotel Hotel { get; set; }
-        public Room Room { get; set; }
-        public Reservation Reservation { get; set; }
+        [DataType(DataType.Date)]
+
+        [Display(Name = "Start date")]
+        public DateTime StartDate { get; set; }
+        [DataType(DataType.Date)]
+
+        [Display(Name = "End date")]
+        public DateTime EndDate { get; set; }
+        public string Location { get; set; }
+        [Display(Name = "TV")]
+        public bool HasTV { get; set; }
+        [Display(Name = "Hair dryer")]
+        public bool HasHairDryer { get; set; }
+        [Display(Name = "WiFi")]
+        public bool HasWiFi { get; set; }
+        [Display(Name = "Parking")]
+        public bool HasParking { get; set; }
     }
 }

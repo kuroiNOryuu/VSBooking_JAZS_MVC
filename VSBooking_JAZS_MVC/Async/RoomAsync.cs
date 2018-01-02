@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -12,7 +13,7 @@ namespace VSBooking_JAZS_MVC.Async
 {
     public class RoomAsync
     {
-        private static string baseURI = "http://localhost:49962/api/Rooms/";
+        /*private static string baseURI = "http://localhost:49962/api/Rooms/";
 
         // Get a list of rooms
         public static List<Room> getRooms()
@@ -42,5 +43,19 @@ namespace VSBooking_JAZS_MVC.Async
 
             return room;
         }
+
+        public static List<Room> getRoomsByDateAndLocation(DateTime startDate, DateTime endDate, string location)
+        {
+            string path = baseURI + "?location=" + location + "&start=" + startDate + "&end=" + endDate;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            Task<string> response = client.GetStringAsync(path);
+            List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(response.Result);
+
+            return rooms;
+        }*/
     }
 }

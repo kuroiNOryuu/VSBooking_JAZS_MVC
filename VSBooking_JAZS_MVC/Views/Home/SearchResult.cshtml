@@ -5,6 +5,7 @@
 }
 
 <h2><i class="fa fa-bed"></i> Available rooms</h2>
+<p>for the period between @Html.DisplayFor(model => model.StartDate) and @Html.DisplayFor(model => model.EndDate)</p>
 
 @using (Html.BeginForm("MultipleResSummary", "Home", FormMethod.Post))
 {
@@ -78,7 +79,7 @@
                     @Html.DisplayFor(modelItem => Model.SearchResult.ElementAt(i).Price) CHF
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "RoomDetails", new { id= Model.SearchResult.ElementAt(i).IdRoom })
+                    @Html.ActionLink("Details", "RoomDetails", new { id= Model.SearchResult.ElementAt(i).IdRoom, search = Model.SearchResult[i].Search })
                 </td>
             </tr>
         }

@@ -14,7 +14,7 @@
 @using (Html.BeginForm("ResSummary", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
+
 <div>
 
     @foreach (var item in Model.Pictures)
@@ -34,6 +34,7 @@
 
         <div class="block-div">
             @Html.DisplayFor(model => model.HasTV)
+            @Html.HiddenFor(model => model.HasTV)
         </div>
 
         <div class="block-div">
@@ -42,6 +43,7 @@
 
         <div class="block-div">
             @Html.DisplayFor(model => model.HasHairDryer)
+            @Html.HiddenFor(model => model.HasHairDryer)
         </div>
 
         <div class="block-div">
@@ -50,6 +52,7 @@
 
         <div class="block-div">
             @Html.DisplayFor(model => model.HasWiFi)
+            @Html.HiddenFor(model => model.HasWiFi)
         </div>
 
         <div class="block-div">
@@ -58,6 +61,7 @@
 
         <div class="block-div">
             @Html.DisplayFor(model => model.HasParking)
+            @Html.HiddenFor(model => model.HasParking)
         </div>
         <p><b>Price : @Html.DisplayFor(model => model.Price) CHF</b></p>
     </div>
@@ -65,5 +69,6 @@
 </div>
 }
 <p>
-    @Html.ActionLink("Back to results", "SearchResult") | @Html.ActionLink("Book this room", "SingleResSummary", new { id = Model.IdRoom })
+    @Html.ActionLink("Back to results", "SearchResult", new { search = Model.Search },
+    null) | @Html.ActionLink("Book this room", "SingleResSummary", new { id = Model.IdRoom })
 </p>
