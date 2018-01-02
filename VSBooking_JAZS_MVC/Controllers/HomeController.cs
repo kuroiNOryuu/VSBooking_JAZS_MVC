@@ -156,47 +156,21 @@ namespace VSBooking_JAZS_MVC.Controllers
         }
 
         /* Page displaying a summary for the reservation of several rooms */
-        public ActionResult MultipleResSummary(List<SearchResult> searchResults)
+        public ActionResult MultipleResSummary(SearchResultsVM searchResults)
         {
-            List<Hotel> hotels = new List<Hotel>();
-            hotels.Add(new Hotel
+            // Get the selected rooms
+            List<Room> rooms = new List<Room>();
+            foreach(SearchResult r in searchResults.SearchResult)
             {
-                IdHotel = 1,
-                Name = "Octodure",
-                Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor" +
-                " incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
-                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, " +
-                "sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                Location = "Martigny",
-                Category = 1,
-                HasWiFi = true,
-                HasParking = true
-            });
-
-            List<Room> rooms = new List<Room>
-            {
-            new Room
-            {
-                IdRoom = 1,
-                Number = 101,
-                Type = 1,
-                Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor" +
-                " incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
-                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, " +
-                "sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                Price = 99,
-                HasTV = true,
-                HasHairDryer = false,
-                Hotel = hotels[0]
+                if (r.Book == true)
+                    rooms.Add(RoomAsync.getRoomById(r.IdRoom));
             }
-            };
-
-            decimal totalPrice = 0;
+                decimal totalPrice = 0;
 
             foreach (Room r in rooms)
                 totalPrice += r.Price;
 
-            ViewModels.ReservationVM result = new ViewModels.ReservationVM
+            ReservationVM result = new ReservationVM
             {
                 Rooms = rooms,
                 TotalPrice = totalPrice
@@ -207,49 +181,21 @@ namespace VSBooking_JAZS_MVC.Controllers
 
         public ActionResult ResConfirmation(ReservationVM reservation)
         {
-            List<Hotel> hotels = new List<Hotel>();
-            hotels.Add(new Hotel
-            {
-                IdHotel = 1,
-                Name = "Octodure",
-                Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor" +
-                " incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
-                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, " +
-                "sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                Location = "Martigny",
-                Category = 1,
-                HasWiFi = true,
-                HasParking = true
-            });
-
             List<Room> rooms = new List<Room>();
-            rooms.Add(new Room
-            {
-                IdRoom = 1,
-                Number = 101,
-                Type = 1,
-                Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor" +
-                " incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
-                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, " +
-                "sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                Price = 99,
-                HasTV = true,
-                HasHairDryer = false,
-                Hotel = hotels[0]
-            });
-
             decimal totalPrice = 0;
 
-            foreach (Room r in rooms)
-                totalPrice += r.Price; ;
+            for(int i = 0; i < reservation.Rooms.Count; i++)
+            {
+                rooms.Add(RoomAsync.getRoomById(reservation.Rooms[i].IdRoom));
+                totalPrice += rooms[i].Price;
+            }
 
-            ViewModels.ReservationVM result = new ViewModels.ReservationVM
+            ReservationVM result = new ReservationVM
             {
                 Rooms = rooms,
                 Firstname = reservation.Firstname,
                 Lastname = reservation.Lastname,
-                TotalPrice = totalPrice,
-                ReservationId = 1
+                TotalPrice = totalPrice
             };
 
             return View(result);

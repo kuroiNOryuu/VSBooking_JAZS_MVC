@@ -7,6 +7,6 @@ namespace VSBooking_JAZS_MVC.ViewModels
 {
     public class SearchResultsVM
     {
-        public IEnumerable<SearchResult> SearchResult { get; set; }
+        public IList<SearchResult> SearchResult { get; set; }
     }
 }

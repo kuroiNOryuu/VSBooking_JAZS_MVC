@@ -14,31 +14,31 @@
         <tr>
             <th></th>
             <th>
-                @Html.DisplayName("Hotel")
+                @Html.DisplayNameFor(model => model.SearchResult.ElementAt(0).HotelName)
             </th>
             <th>
-                @Html.DisplayName("Location")
+                @Html.DisplayNameFor(model => model.SearchResult.ElementAt(0).Location)
             </th>
             <th>
-                @Html.DisplayName("Number")
+                @Html.DisplayNameFor(model => model.SearchResult.ElementAt(0).Number)
             </th>
             <th>
-                @Html.DisplayName("Type")
+                @Html.DisplayNameFor(model => model.SearchResult.ElementAt(0).Type)
             </th>
             <th>
-                @Html.DisplayName("TV")
+                @Html.DisplayNameFor(model => model.SearchResult.ElementAt(0).HasTV)
             </th>
             <th>
-                @Html.DisplayName("Hair dryer")
+                @Html.DisplayNameFor(model => model.SearchResult.ElementAt(0).HasHairDryer)
             </th>
             <th>
-                @Html.DisplayName("WiFi")
+                @Html.DisplayNameFor(model => model.SearchResult.ElementAt(0).HasWiFi)
             </th>
             <th>
-                @Html.DisplayName("Parking")
+                @Html.DisplayNameFor(model => model.SearchResult.ElementAt(0).HasParking)
             </th>
             <th>
-                @Html.DisplayName("Price")
+                @Html.DisplayNameFor(model => model.SearchResult.ElementAt(0).Price)
             </th>
             <th></th>
         </tr>
@@ -46,44 +46,35 @@
         @for (int i = 0; i < Model.SearchResult.Count(); i++)
         {
             <tr>
-                @Html.HiddenFor(modelItem => Model.SearchResult.ElementAt(i).IdRoom)
                 <td>
-                    @Html.CheckBoxFor(modelItem => Model.SearchResult.ElementAt(i).Book)
+                    @Html.HiddenFor(modelItem => Model.SearchResult[i].IdRoom, new { id = "IdRoom" + i })
+                    @Html.CheckBoxFor(modelItem => Model.SearchResult[i].Book)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.SearchResult.ElementAt(i).HotelName)
                     @Html.DisplayFor(modelItem => Model.SearchResult.ElementAt(i).HotelName)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.SearchResult.ElementAt(i).Location)
                     @Html.DisplayFor(modelItem => Model.SearchResult.ElementAt(i).Location)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.SearchResult.ElementAt(i).Number)
                     @Html.DisplayFor(modelItem => Model.SearchResult.ElementAt(i).Number)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.SearchResult.ElementAt(i).Type)
                     @Html.DisplayFor(modelItem => Model.SearchResult.ElementAt(i).Type)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.SearchResult.ElementAt(i).HasTV)
                     @Html.DisplayFor(modelItem => Model.SearchResult.ElementAt(i).HasTV)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.SearchResult.ElementAt(i).HasHairDryer)
                     @Html.DisplayFor(modelItem => Model.SearchResult.ElementAt(i).HasHairDryer)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.SearchResult.ElementAt(i).HasWiFi)
                     @Html.DisplayFor(modelItem => Model.SearchResult.ElementAt(i).HasWiFi)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.SearchResult.ElementAt(i).HasParking)
                     @Html.DisplayFor(modelItem => Model.SearchResult.ElementAt(i).HasParking)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.SearchResult.ElementAt(i).Price)
                     @Html.DisplayFor(modelItem => Model.SearchResult.ElementAt(i).Price) CHF
                 </td>
                 <td>
@@ -91,7 +82,6 @@
                 </td>
             </tr>
         }
-
     </table>
 
     <div class="form-group">

@@ -4,7 +4,6 @@
 }
 
 <h2><i class="fa fa-book"></i> Reservation summary</h2>
-
 <br/>
 
 @using (Html.BeginForm("ResConfirmation", "Home", FormMethod.Post))
@@ -16,9 +15,6 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Number)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Type)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).HasTV)
@@ -47,43 +43,29 @@
         @for (int i = 0; i < Model.Rooms.Count(); i++)
         {
             <tr>
-
-                @Html.HiddenFor(model => model.Rooms.ElementAt(i).IdRoom)
-
+                @Html.HiddenFor(model => model.Rooms[i].IdRoom)
                 <td>
-                    @Html.HiddenFor(model => model.Rooms.ElementAt(i).Number)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Number)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Type)
-                    @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Type)
-                </td>
-                <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).HasTV)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).HasTV)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).HasHairDryer)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).HasHairDryer)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.HasWiFi)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.HasWiFi)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.HasParking)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.HasParking)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Name)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Name)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Location)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Location)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Price)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Price)
                 </td>
                 <td>

@@ -1,75 +1,44 @@
-﻿@model VSBooking_JAZS_MVC.ViewModels.ResSummary
-
+﻿@model VSBooking_JAZS_MVC.ViewModels.ReservationVM
 @{
     ViewBag.Title = "MultipleResSummary";
 }
 
-<div class="form-group">
-    <div class="col-md-10">
-        <h2><i class="fa fa-book"></i> Reservation summary</h2>
-    </div>
-    <div class="col-md-2">
-        <input type="submit" value="Confirm reservation" class="btn btn-default" />
-    </div>
-</div>
+<h2><i class="fa fa-book"></i> Reservation summary</h2>
+<br />
 
 @using (Html.BeginForm("ResConfirmation", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Firstname, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Lastname, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Search" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayName("Number")
+                @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Number)
             </th>
             <th>
-                @Html.DisplayName("Description")
+                @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Description)
             </th>
             <th>
-                @Html.DisplayName("Type")
+                @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).HasTV)
             </th>
             <th>
-                @Html.DisplayName("TV")
+                @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).HasHairDryer)
             </th>
             <th>
-                @Html.DisplayName("WiFi")
+                @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Hotel.HasWiFi)
             </th>
             <th>
-                @Html.DisplayName("Parking")
+                @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Hotel.HasParking)
             </th>
             <th>
-                @Html.DisplayName("Hair dryer")
+                @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Hotel.Name)
             </th>
             <th>
-                @Html.DisplayName("Price")
+                @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Hotel.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Price)
             </th>
             <th></th>
         </tr>
@@ -77,51 +46,36 @@
         @for (int i = 0; i < Model.Rooms.Count(); i++)
         {
             <tr>
-
-                @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).IdRoom)
-
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Number)
+                    @Html.HiddenFor(modelItem => Model.Rooms[i].IdRoom)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Number)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Description)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Description)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Type)
-                    @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Type)
-                </td>
-                <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Price)
-                    @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Price)
-                </td>
-                <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).HasTV)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).HasTV)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).HasHairDryer)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).HasHairDryer)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.HasWiFi)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.HasWiFi)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.HasParking)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.HasParking)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Name)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Name)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Location)
                     @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Location)
                 </td>
                 <td>
-                    @Html.ActionLink("Delete", "Delete", new { id = Model.Rooms.ElementAt(i).IdRoom })
+                    @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.Rooms[i].IdRoom })
                 </td>
             </tr>
         }
@@ -143,6 +97,33 @@
         </tr>
 
     </table>
+
+    <h4>Please enter your name for the reservation</h4>
     <br />
 
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Firstname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Lastname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Confirm reservation" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
 }
