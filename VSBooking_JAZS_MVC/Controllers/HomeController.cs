@@ -14,7 +14,6 @@ namespace VSBooking_JAZS_MVC.Controllers
 {
     public class HomeController : Controller
     {
-        string baseURI = "http://localhost:49962/api";
         string singleRoom = "Single room";
         string doubleRoom = "Double room";
 
@@ -287,6 +286,8 @@ namespace VSBooking_JAZS_MVC.Controllers
         }
 
         //=========================================================================================================================
+
+        string baseURI = "http://localhost:49962/api";
 
         // Get a list of rooms
         public List<Room> GetRooms()

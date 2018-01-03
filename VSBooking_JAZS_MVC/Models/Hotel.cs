@@ -17,6 +17,6 @@ namespace VSBooking_JAZS_MVC.Models
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Website { get; set; }
-        public IEnumerable<Room> Rooms { get; set; }
+        public IEnumerable<Room> Room { get; set; }
     }
 }
