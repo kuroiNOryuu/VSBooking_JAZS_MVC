@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using VSBooking_JAZS_MVC.Async;
@@ -13,13 +14,14 @@ namespace VSBooking_JAZS_MVC.Controllers
 {
     public class HomeController : Controller
     {
-        string baseURI = "http://localhost:49962/api/Rooms/";
+        string baseURI = "http://localhost:49962/api";
         string singleRoom = "Single room";
         string doubleRoom = "Double room";
 
         /* Search form used as home page */
         public ActionResult Search()
         {
+            Session.Clear();
             return View();
         }
 
@@ -32,14 +34,28 @@ namespace VSBooking_JAZS_MVC.Controllers
         }
 
         /* Page displaying the search results */
-        public ActionResult SearchResult(Search search)
+        public ActionResult SearchResult(Search result)
         {
+            Search search;
+
+            // Store search as a session to keep dates and location for reservation and back to results navigation
+            Session["start_date"] = result.StartDate;
+            Session["end_date"] = result.EndDate;
+            Session["location"] = result.Location;
+            Session["hair_dryer"] = result.HasHairDryer;
+            Session["TV"] = result.HasTV;
+            Session["WiFi"] = result.HasWiFi;
+            Session["parking"] = result.HasParking;
+
+            search = result;
+
+
             List<Room> rooms = new List<Room>();
             // Get the list of available rooms
             if (search.HasHairDryer == false && search.HasParking == false && search.HasTV == false && search.HasWiFi == false)
             {
                 // Normal search
-                rooms = getRoomsByDateAndLocation(search.StartDate, search.EndDate, search.Location);
+                rooms = GetRoomsByDateAndLocation(search.StartDate, search.EndDate, search.Location);
             }
 
             else
@@ -63,7 +79,7 @@ namespace VSBooking_JAZS_MVC.Controllers
                     Book = false,
                     IdRoom = r.IdRoom,
                     Number = r.Number,
-                    Description = r.Description,
+                    RoomDescription = r.Description,
                     Type = type,
                     Price = r.Price,
                     HasTV = r.HasTV,
@@ -72,8 +88,7 @@ namespace VSBooking_JAZS_MVC.Controllers
                     HasParking = r.Hotel.HasParking,
                     HotelName = r.Hotel.Name,
                     Location = r.Hotel.Location,
-                    Pictures = r.Picture,
-                    Search = search
+                    Pictures = r.Picture
                 });
             }
 
@@ -83,23 +98,23 @@ namespace VSBooking_JAZS_MVC.Controllers
                 StartDate = search.StartDate,
                 EndDate = search.EndDate
             };
-            
+
 
             return View(resultsVM);
         }
 
         /* Page displaying the details for selected room */
-        public ActionResult RoomDetails(int id, Search search)
+        public ActionResult RoomDetails(int id)
         {
             List<Picture> pictures = new List<Picture>
             {
                 new Picture { IdPicture = 1, Url = @"~/res/img/img1.jpg" },
                 new Picture { IdPicture = 2, Url = @"~/res/img/img2.jpg" },
                 new Picture { IdPicture = 3, Url = @"~/res/img/img3.jpg" }
-            };           
+            };
 
             // Get room by id
-            Room room = getRoomById(id);
+            Room room = GetRoomById(id);
 
             string type;
             if (room.Type == 1)
@@ -112,7 +127,7 @@ namespace VSBooking_JAZS_MVC.Controllers
             {
                 IdRoom = room.IdRoom,
                 Number = room.Number,
-                Description = room.Description,
+                RoomDescription = room.Description,
                 Type = type,
                 Price = room.Price,
                 HasTV = room.HasTV,
@@ -120,12 +135,12 @@ namespace VSBooking_JAZS_MVC.Controllers
                 HasWiFi = room.Hotel.HasWiFi,
                 HasParking = room.Hotel.HasParking,
                 HotelName = room.Hotel.Name,
+                HotelDescription = room.Hotel.Description,
                 Location = room.Hotel.Location,
                 Phone = room.Hotel.Phone,
                 Email = room.Hotel.Email,
                 Website = room.Hotel.Website,
-                Pictures = pictures,
-                Search = search
+                Pictures = pictures
             };
 
             if (result == null)
@@ -134,6 +149,29 @@ namespace VSBooking_JAZS_MVC.Controllers
             }
 
             return View(result);
+        }
+
+        /* Set values for SearchResult when coming back from RoomDetails */
+        public ActionResult BackToResult()
+        {
+            var startDate = (DateTime)Session["start_date"];
+            var endDate = (DateTime)Session["end_date"];
+            var location = (string)Session["location"];
+            var hasHairDryer = (bool)Session["hair_dryer"];
+            var hasTV = (bool)Session["TV"];
+            var hasWiFi = (bool)Session["WiFi"];
+            var hasParking = (bool)Session["parking"];
+
+            return RedirectToAction("SearchResult", "Home", new
+            {
+                StartDate = startDate,
+                EndDate = endDate,
+                Location = location,
+                HasHairDryer = hasHairDryer,
+                HasTV = hasTV,
+                HasWiFi = hasWiFi,
+                HasParking = hasParking
+            });
         }
 
         /* Page displaying a summary for the reservation of one room */
@@ -147,7 +185,7 @@ namespace VSBooking_JAZS_MVC.Controllers
             };
 
             // Get room by id
-            Room room = getRoomById(id);
+            Room room = GetRoomById(id);
             room.Picture = pictures;
 
             // Put data into view model
@@ -159,10 +197,16 @@ namespace VSBooking_JAZS_MVC.Controllers
             else
                 type = doubleRoom;
 
+            // Get dates from session
+            var startDate = (DateTime)Session["start_date"];
+            var endDate = (DateTime)Session["end_date"];
+
             ReservationVM result = new ReservationVM
             {
                 Rooms = rooms,
-                TotalPrice = room.Price
+                TotalPrice = room.Price,
+                StartDate = startDate,
+                EndDate = endDate
             };
 
             if (result == null)
@@ -178,10 +222,10 @@ namespace VSBooking_JAZS_MVC.Controllers
         {
             // Get the selected rooms
             List<Room> rooms = new List<Room>();
-            foreach(SearchResult r in searchResults.SearchResult)
+            foreach (SearchResult r in searchResults.SearchResult)
             {
                 if (r.Book == true)
-                    rooms.Add(getRoomById(r.IdRoom));
+                    rooms.Add(GetRoomById(r.IdRoom));
             }
 
             // Get total price
@@ -191,10 +235,16 @@ namespace VSBooking_JAZS_MVC.Controllers
             foreach (Room r in rooms)
                 totalPrice += r.Price;
 
+            // Get dates from session
+            var startDate = (DateTime)Session["start_date"];
+            var endDate = (DateTime)Session["end_date"];
+
             ReservationVM result = new ReservationVM
             {
                 Rooms = rooms,
-                TotalPrice = totalPrice
+                TotalPrice = totalPrice,
+                StartDate = startDate,
+                EndDate = endDate
             };
 
             return View(result);
@@ -206,11 +256,23 @@ namespace VSBooking_JAZS_MVC.Controllers
             decimal totalPrice = 0;
 
             // Get reserved rooms
-            for(int i = 0; i < reservation.Rooms.Count; i++)
+            for (int i = 0; i < reservation.Rooms.Count; i++)
             {
-                rooms.Add(getRoomById(reservation.Rooms[i].IdRoom));
+                rooms.Add(GetRoomById(reservation.Rooms[i].IdRoom));
                 totalPrice += rooms[i].Price;
             }
+
+            // Create reservation
+            Reservation res = new Reservation
+            {
+                CustomerFirstname = reservation.Firstname,
+                CustomerLastname = reservation.Lastname,
+                StartDate = reservation.StartDate,
+                EndDate = reservation.EndDate,
+                Room = rooms
+            };
+
+            AddReservation(res);
 
             // Put data into view model
             ReservationVM result = new ReservationVM
@@ -227,23 +289,23 @@ namespace VSBooking_JAZS_MVC.Controllers
         //=========================================================================================================================
 
         // Get a list of rooms
-        public List<Room> getRooms()
+        public List<Room> GetRooms()
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            Task<string> response = client.GetStringAsync(baseURI);
+            Task<string> response = client.GetStringAsync(baseURI + "/Rooms");
             List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(response.Result);
 
             return rooms;
         }
 
         // Get one room by its id
-        public Room getRoomById(int id)
+        public Room GetRoomById(int id)
         {
-            string path = baseURI + "/" + id;
+            string path = baseURI + "/Rooms/" + id;
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
@@ -256,9 +318,9 @@ namespace VSBooking_JAZS_MVC.Controllers
         }
 
         // Get the list of available rooms by dates and location
-        public List<Room> getRoomsByDateAndLocation(DateTime startDate, DateTime endDate, string location)
+        public List<Room> GetRoomsByDateAndLocation(DateTime startDate, DateTime endDate, string location)
         {
-            string path = baseURI + "?location=" + location + "&start=" + startDate + "&end=" + endDate;
+            string path = baseURI + "/Rooms?location=" + location + "&start=" + startDate + "&end=" + endDate;
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
@@ -271,9 +333,16 @@ namespace VSBooking_JAZS_MVC.Controllers
         }
 
         // Create a reservation for one room
-        public void addReservation(Reservation reservation)
+        public bool AddReservation(Reservation reservation)
         {
-
+            string uri = baseURI + "/Reservations";
+            using (HttpClient httpClient = new HttpClient())
+            {
+                string res = JsonConvert.SerializeObject(reservation);
+                StringContent frame = new StringContent(res, Encoding.UTF8, "Application/json");
+                Task<HttpResponseMessage> response = httpClient.PostAsync(uri, frame);
+                return response.Result.IsSuccessStatusCode;
+            }
         }
     }
 }

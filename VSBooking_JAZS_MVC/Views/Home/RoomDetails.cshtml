@@ -9,9 +9,10 @@
 <h4>@Html.DisplayFor(model => model.Phone)</h4>
 <a href="@Html.DisplayFor(model => model.Email)">@Html.DisplayFor(model => model.Email)</a>
 <a href="@Html.DisplayFor(model => model.Website)">@Html.DisplayFor(model => model.Website)</a>
+<p>@Html.DisplayFor(model => model.HotelDescription)</p>
 <hr />
 
-@using (Html.BeginForm("ResSummary", "Home", FormMethod.Post))
+@using (Html.BeginForm("SingleResSummary", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -26,7 +27,7 @@
 
     <div>
         <p><b>Room #@Html.DisplayFor(model => model.Number) - @Html.DisplayFor(model => model.Type)</b></p>
-        <p>@Html.DisplayFor(model => model.Description)</p>        
+        <p>@Html.DisplayFor(model => model.RoomDescription)</p>        
 
         <div class="block-div">
             @Html.DisplayNameFor(model => model.HasTV)
@@ -69,6 +70,5 @@
 </div>
 }
 <p>
-    @Html.ActionLink("Back to results", "SearchResult", new { search = Model.Search },
-    null) | @Html.ActionLink("Book this room", "SingleResSummary", new { id = Model.IdRoom })
+    @Html.ActionLink("Back to results", "BackToResult") | @Html.ActionLink("Book this room", "SingleResSummary", new { id = Model.IdRoom })
 </p>

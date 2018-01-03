@@ -16,5 +16,9 @@ namespace VSBooking_JAZS_MVC.ViewModels
         public string Lastname { get; set; }
         public decimal TotalPrice { get; set; }
         public int ReservationId { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime EndDate { get; set; }
     }
 }

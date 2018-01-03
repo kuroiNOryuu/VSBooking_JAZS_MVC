@@ -32,26 +32,21 @@
     {
         <tr>
 
-            @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).IdRoom)
+            @Html.HiddenFor(modelItem => Model.Rooms[i].IdRoom)
 
             <td>
-                @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Number)
                 @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Number)
             </td>
             <td>
-                @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Type)
                 @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Description)
             </td>
             <td>
-                @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Name)
                 @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Name)
             </td>
-            <td>
-                @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Location)
+            <td>               
                 @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Location)
             </td>
             <td>
-                @Html.HiddenFor(modelItem => Model.Rooms.ElementAt(i).Price)
                 @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Price)
             </td>
         </tr>

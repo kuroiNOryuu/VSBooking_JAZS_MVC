@@ -78,8 +78,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => Model.SearchResult.ElementAt(i).Price) CHF
                 </td>
-                <td>
-                    @Html.ActionLink("Details", "RoomDetails", new { id= Model.SearchResult.ElementAt(i).IdRoom, search = Model.SearchResult[i].Search })
+                <td>                       
+                    @Html.ActionLink("Details", "RoomDetails", new { id = Model.SearchResult.ElementAt(i).IdRoom })
                 </td>
             </tr>
         }

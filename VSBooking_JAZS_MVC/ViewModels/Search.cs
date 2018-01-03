@@ -5,12 +5,8 @@ namespace VSBooking_JAZS_MVC.ViewModels
 {
     public class Search
     {
-        [DataType(DataType.Date)]
-
         [Display(Name = "Start date")]
         public DateTime StartDate { get; set; }
-        [DataType(DataType.Date)]
-
         [Display(Name = "End date")]
         public DateTime EndDate { get; set; }
         public string Location { get; set; }

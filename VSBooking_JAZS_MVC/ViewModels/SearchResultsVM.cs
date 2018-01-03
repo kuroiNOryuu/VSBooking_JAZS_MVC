@@ -9,11 +9,9 @@ namespace VSBooking_JAZS_MVC.ViewModels
     public class SearchResultsVM
     {
         public IList<SearchResult> SearchResult { get; set; }
-        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = false)]
         [Display(Name = "Start date")]
         public DateTime StartDate { get; set; }
-        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = false)]
         [Display(Name = "End date")]
         public DateTime EndDate { get; set; }
