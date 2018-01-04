@@ -60,7 +60,7 @@ namespace VSBooking_JAZS_MVC.Controllers
             else
             {
                 // Advanced search
-                //rooms = method to add here
+                rooms = GetRoomsAdvancedSearch(search);
             }
 
             // Put data into view model
@@ -289,7 +289,7 @@ namespace VSBooking_JAZS_MVC.Controllers
 
         string baseURI = "http://localhost:49962/api";
 
-        // Get a list of rooms
+        // Get the list of rooms with normal search
         public List<Room> GetRooms()
         {
             HttpClient client = new HttpClient();
@@ -301,6 +301,22 @@ namespace VSBooking_JAZS_MVC.Controllers
             List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(response.Result);
 
             return rooms;
+        }
+
+        // Get the list of rooms with advanced search (POST)
+        public List<Room> GetRoomsAdvancedSearch(Search search)
+        {
+            
+            string uri = baseURI + "/Rooms";
+            using (HttpClient httpClient = new HttpClient())
+            {
+                string res = JsonConvert.SerializeObject(search);
+                StringContent frame = new StringContent(res, Encoding.UTF8, "Application/json");
+                Task<HttpResponseMessage> response = httpClient.PostAsync(uri, frame);
+
+                List<Room> result = JsonConvert.DeserializeObject<List<Room>>(response.Result.ToString());
+                return result;
+            }
         }
 
         // Get one room by its id
