@@ -48,7 +48,6 @@ namespace VSBooking_JAZS_MVC.Controllers
 
             search = result;
 
-
             List<Room> rooms = new List<Room>();
             // Get the list of available rooms
             if (search.HasHairDryer == false && search.HasParking == false && search.HasTV == false && search.HasWiFi == false)
@@ -105,13 +104,6 @@ namespace VSBooking_JAZS_MVC.Controllers
         /* Page displaying the details for selected room */
         public ActionResult RoomDetails(int id)
         {
-            List<Picture> pictures = new List<Picture>
-            {
-                new Picture { IdPicture = 1, Url = @"~/res/img/img1.jpg" },
-                new Picture { IdPicture = 2, Url = @"~/res/img/img2.jpg" },
-                new Picture { IdPicture = 3, Url = @"~/res/img/img3.jpg" }
-            };
-
             // Get room by id
             Room room = GetRoomById(id);
 
@@ -139,7 +131,7 @@ namespace VSBooking_JAZS_MVC.Controllers
                 Phone = room.Hotel.Phone,
                 Email = room.Hotel.Email,
                 Website = room.Hotel.Website,
-                Pictures = pictures
+                Pictures = room.Picture
             };
 
             if (result == null)
@@ -289,7 +281,7 @@ namespace VSBooking_JAZS_MVC.Controllers
 
         string baseURI = "http://localhost:49962/api";
 
-        // Get the list of rooms with normal search
+        // Get the list of rooms
         public List<Room> GetRooms()
         {
             HttpClient client = new HttpClient();
@@ -301,22 +293,6 @@ namespace VSBooking_JAZS_MVC.Controllers
             List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(response.Result);
 
             return rooms;
-        }
-
-        // Get the list of rooms with advanced search (POST)
-        public List<Room> GetRoomsAdvancedSearch(Search search)
-        {
-            
-            string uri = baseURI + "/Rooms";
-            using (HttpClient httpClient = new HttpClient())
-            {
-                string res = JsonConvert.SerializeObject(search);
-                StringContent frame = new StringContent(res, Encoding.UTF8, "Application/json");
-                Task<HttpResponseMessage> response = httpClient.PostAsync(uri, frame);
-
-                List<Room> result = JsonConvert.DeserializeObject<List<Room>>(response.Result.ToString());
-                return result;
-            }
         }
 
         // Get one room by its id
@@ -334,10 +310,26 @@ namespace VSBooking_JAZS_MVC.Controllers
             return room;
         }
 
-        // Get the list of available rooms by dates and location
+        // Get the list of available rooms with normal search
         public List<Room> GetRoomsByDateAndLocation(DateTime startDate, DateTime endDate, string location)
         {
             string path = baseURI + "/Rooms?location=" + location + "&start=" + startDate + "&end=" + endDate;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            Task<string> response = client.GetStringAsync(path);
+            List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(response.Result);
+
+            return rooms;
+        }
+
+        // Get the list of available rooms with advanced search
+        public List<Room> GetRoomsAdvancedSearch(Search search)
+        {
+            string path = baseURI + "/Rooms?location=" + search.Location + "&start=" + search.StartDate + "&end=" + search.EndDate 
+                + "&tv=" + search.HasTV + "&hairdryer=" + search.HasHairDryer + "&wifi=" + search.HasWiFi + "&parking=" + search.HasParking;
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(

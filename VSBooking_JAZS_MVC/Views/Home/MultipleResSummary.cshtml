@@ -4,6 +4,7 @@
 }
 
 <h2><i class="fa fa-book"></i> Reservation summary</h2>
+<p>@Html.DisplayFor(model => model.StartDate) to @Html.DisplayFor(model => model.EndDate)</p>
 <br />
 
 @using (Html.BeginForm("ResConfirmation", "Home", FormMethod.Post))

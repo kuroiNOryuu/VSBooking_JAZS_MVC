@@ -9,6 +9,7 @@ namespace VSBooking_JAZS_MVC.ViewModels
         public DateTime StartDate { get; set; }
         [Display(Name = "End date")]
         public DateTime EndDate { get; set; }
+        [Required]
         public string Location { get; set; }
         [Display(Name = "TV")]
         public bool HasTV { get; set; }
