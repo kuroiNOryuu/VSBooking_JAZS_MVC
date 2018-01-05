@@ -5,8 +5,10 @@ namespace VSBooking_JAZS_MVC.ViewModels
 {
     public class Search
     {
+        [DisplayFormat(DataFormatString = "{0:s}")]
         [Display(Name = "Start date")]
         public DateTime StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:s}")]
         [Display(Name = "End date")]
         public DateTime EndDate { get; set; }
         [Required]

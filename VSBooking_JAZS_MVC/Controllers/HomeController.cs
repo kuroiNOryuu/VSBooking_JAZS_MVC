@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using VSBooking_JAZS_MVC.Async;
 using VSBooking_JAZS_MVC.Models;
 using VSBooking_JAZS_MVC.ViewModels;
 
@@ -168,16 +167,8 @@ namespace VSBooking_JAZS_MVC.Controllers
         /* Page displaying a summary for the reservation of one room */
         public ActionResult SingleResSummary(int id)
         {
-            List<Picture> pictures = new List<Picture>
-            {
-                new Picture { IdPicture = 1, Url = @"~/res/img/img1.jpg" },
-                new Picture { IdPicture = 2, Url = @"~/res/img/img2.jpg" },
-                new Picture { IdPicture = 3, Url = @"~/res/img/img3.jpg" }
-            };
-
             // Get room by id
             Room room = GetRoomById(id);
-            room.Picture = pictures;
 
             // Put data into view model
             List<Room> rooms = new List<Room> { room };
@@ -313,7 +304,10 @@ namespace VSBooking_JAZS_MVC.Controllers
         // Get the list of available rooms with normal search
         public List<Room> GetRoomsByDateAndLocation(DateTime startDate, DateTime endDate, string location)
         {
-            string path = baseURI + "/Rooms?location=" + location + "&start=" + startDate + "&end=" + endDate;
+            string start = startDate.ToString("s");
+            string end = endDate.ToString("s");
+            string path = baseURI + "/Rooms?location=" + location + "&start=" + start + "&end=" + end;
+
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
@@ -328,7 +322,9 @@ namespace VSBooking_JAZS_MVC.Controllers
         // Get the list of available rooms with advanced search
         public List<Room> GetRoomsAdvancedSearch(Search search)
         {
-            string path = baseURI + "/Rooms?location=" + search.Location + "&start=" + search.StartDate + "&end=" + search.EndDate 
+            string start = search.StartDate.ToString("s");
+            string end = search.EndDate.ToString("s");
+            string path = baseURI + "/Rooms?location=" + search.Location + "&start=" + start + "&end=" + end 
                 + "&tv=" + search.HasTV + "&hairdryer=" + search.HasHairDryer + "&wifi=" + search.HasWiFi + "&parking=" + search.HasParking;
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
@@ -341,7 +337,7 @@ namespace VSBooking_JAZS_MVC.Controllers
             return rooms;
         }
 
-        // Create a reservation for one room
+        // Create a reservation
         public bool AddReservation(Reservation reservation)
         {
             string uri = baseURI + "/Reservations";

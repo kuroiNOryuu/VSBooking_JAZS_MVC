@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using VSBooking_JAZS_MVC.Models;
 
 namespace VSBooking_JAZS_MVC.ViewModels
@@ -16,9 +14,9 @@ namespace VSBooking_JAZS_MVC.ViewModels
         public string Lastname { get; set; }
         public decimal TotalPrice { get; set; }
         public int ReservationId { get; set; }
-        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = false)]
         public DateTime StartDate { get; set; }
-        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = false)]
         public DateTime EndDate { get; set; }
     }
 }
