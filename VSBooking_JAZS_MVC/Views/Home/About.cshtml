@@ -1,7 +1,64 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<h2 id="#logbook"><i class="fa fa-coffee" aria-hidden="true"></i> Logbook</h2>
+
+<h3><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> 15.12.2017</h3>
+
+<ul>
+    <li>Checked database model (.edmx) and proposed new solution.</li>
+    <li>Added models</li>
+    <li>Added Search view (normal and advanced search)</li>
+    <li>Added SearchResultVM and SearchResult ViewModels and corresponding view (SearchResult)</li>
+</ul>
+
+<h3><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> 17.12.2017</h3>
+<ul>
+    <li>Added RoomDetails view</li>
+</ul>
+
+<h3><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> 23.12.2017</h3>
+<ul>
+    <li>Adapted Models to Web api entities</li>
+    <li>Adapted HomeController for navigation between Search and SearchRsult with parameters</li>
+    <li>Created ResSummary view to display a reservation summary (one room)</li>
+</ul>
+
+
+<h3><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> 24.12.2017</h3>
+<ul>
+    <li>Renammed ResSummary into SingleResSummary to differentiate reservation for one or several rooms (only the id is sent from RoomDetails</li>
+    <li><i class="fa fa-bug" aria-hidden="true"></i> Added Multiple ResSummary. Not working (NullReferenceException: roomIds are not saved between views)</li>
+</ul>
+
+<h3><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> 27.12.2017</h3>
+<ul>
+    <li>Added ResConfirmation view, that displays a reservation confirmation (reachable only from SingleResSummary because of the bug explained before)</li>
+    <li>Implemented GET methods from web api (getRooms(), getRommById())</li>
+</ul>
+
+
+<h3><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> 29.12.2017</h3>
+<ul>
+    <li>Modified SearchResultVM: IList instead of IEnumerable and [i] in a for loop instead of .ElementAt(i) in foreach loop. Fixed the first bug mentionned</li>
+    <li>Adapted HomeController for navigation until ResConfirmation: total price is calculated, fields are displayed</li>
+</ul>
+
+<h3><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> 01.01.2018</h3>
+<ul>
+    <li>Implemented normal search with getRoomByDatesAndLocation()</li>
+    <li><i class="fa fa-bug" aria-hidden="true"></i> When coming back to results from RoomDetails, room list is empty</li>
+    <li>Added Session variables to keep data necessary for navigation (fixed bug at previous point) and reservation (dates)</li>
+</ul>
+
+<h3><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> 02.01.2018</h3>
+<ul>
+    <li><i class="fa fa-bug" aria-hidden="true"></i> Added POST method for advanced search. Not working (where to get the retuned JSON?) => dropped</li>
+</ul>
+
+<h3><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> 05.01.2018</h3>
+<ul>
+    <li>Implemented advanced search with GET method</li>
+    <li>Modified HomeController to get pictures from web api</li>
+</ul>
