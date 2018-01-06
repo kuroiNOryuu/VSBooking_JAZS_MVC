@@ -260,16 +260,53 @@ namespace VSBooking_JAZS_MVC.Controllers
 
             AddReservation(res);
 
+            // Get id of new created reservation
+            List<Reservation> retReservation = GetReservations();
+            int size = retReservation.Count;
+
             // Put data into view model
             ReservationVM result = new ReservationVM
             {
+                ReservationId = retReservation[size-1].IdReservation,
                 Rooms = rooms,
                 Firstname = reservation.Firstname,
                 Lastname = reservation.Lastname,
+                StartDate = reservation.StartDate,
+                EndDate = reservation.EndDate,
                 TotalPrice = totalPrice
             };
 
             return View(result);
+        }
+
+        public ActionResult CancelReservation(int id)
+        {
+            Reservation res = GetReservation(id);
+
+            bool success = DeleteReservation(id, res.CustomerFirstname, res.CustomerLastname);
+
+            var startDate = (DateTime)Session["start_date"];
+            var endDate = (DateTime)Session["end_date"];
+
+            ReservationVM result = new ReservationVM
+            {
+                ReservationId = id,
+                Rooms = res.Room,
+                StartDate = startDate,
+                EndDate = endDate,
+                Firstname = res.CustomerFirstname,
+                Lastname = res.CustomerLastname
+            };
+
+            if (success == true)
+            {
+                return View(result);
+            }
+
+            result.Message = "Cancellation refused";
+
+            return RedirectToAction("ResConfirmation", "Home", result);
+            
         }
 
         //=========================================================================================================================
@@ -350,6 +387,46 @@ namespace VSBooking_JAZS_MVC.Controllers
                 string res = JsonConvert.SerializeObject(reservation);
                 StringContent frame = new StringContent(res, Encoding.UTF8, "Application/json");
                 Task<HttpResponseMessage> response = httpClient.PostAsync(uri, frame);
+                return response.Result.IsSuccessStatusCode;
+            }
+        }
+
+        // Get the list of reservations
+        public List<Reservation> GetReservations()
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            Task<string> response = client.GetStringAsync(baseURI + "/Reservations");
+            List<Reservation> reservation = JsonConvert.DeserializeObject<List<Reservation>>(response.Result);
+
+            return reservation;
+        }
+
+        // Get reservation by id
+        public Reservation GetReservation(int id)
+        {
+            string path = baseURI + "/Reservations/" + id;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            Task<string> response = client.GetStringAsync(path);
+            Reservation reservation = JsonConvert.DeserializeObject<Reservation>(response.Result);
+
+            return reservation;
+        }
+
+        // Remove reservation by id
+        public bool DeleteReservation(int id, string firstname, string lastname)
+        {
+            string path = baseURI + "/Reservations?id=" + id + "&firstname=" + firstname + "&lastname=" + lastname;
+            using (HttpClient httpClient = new HttpClient())
+            {
+                Task<HttpResponseMessage> response = httpClient.DeleteAsync(path);
                 return response.Result.IsSuccessStatusCode;
             }
         }

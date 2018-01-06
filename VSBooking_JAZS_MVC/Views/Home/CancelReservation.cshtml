@@ -1,19 +1,19 @@
 ﻿@model VSBooking_JAZS_MVC.ViewModels.ReservationVM
 
 @{
-    ViewBag.Title = "ResConfirmation";
+    ViewBag.Title = "CancelReservation";
 }
 
-<h2>Reservation confirmation</h2>
+<h2>Reservation canceled</h2>
 <p>Reservation reference: @Html.DisplayFor(model => model.ReservationId)</p>
-<p>Thank you @Html.DisplayFor(model => model.Firstname) @Html.DisplayFor(model => model.Lastname),</p>
-<p>you have succesfully reserved the following room(s) from @Html.DisplayFor(model => model.StartDate) to @Html.DisplayFor(model => model.EndDate):</p>
-
-@Html.HiddenFor(model => model.StartDate)
-@Html.HiddenFor(model => model.EndDate)
+<p>@Html.DisplayFor(model => model.Firstname) @Html.DisplayFor(model => model.Lastname),</p>
+<p>you have succesfully cancelled the following reservation:</p>
 
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayName("Period")
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Rooms.ElementAt(0).Number)
         </th>
@@ -39,6 +39,9 @@
             @Html.HiddenFor(modelItem => Model.Rooms[i].IdRoom)
 
             <td>
+                @Html.DisplayFor(model => model.StartDate) to @Html.DisplayFor(model => model.EndDate)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Number)
             </td>
             <td>
@@ -47,7 +50,7 @@
             <td>
                 @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Name)
             </td>
-            <td>               
+            <td>
                 @Html.DisplayFor(modelItem => Model.Rooms.ElementAt(i).Hotel.Location)
             </td>
             <td>
@@ -56,20 +59,6 @@
         </tr>
     }
 
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-            Total price :
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.TotalPrice) CHF
-        </td>
-    </tr>
-
 </table>
 
-<p>@Html.DisplayFor(model => model.Message)</p>
-
-@Html.ActionLink("Cancel reservation", "CancelReservation", new { id = Model.ReservationId })
+@Html.ActionLink("Search another room", "Search")
