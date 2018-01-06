@@ -157,7 +157,7 @@
     </Compile>
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\Picture.cs" />
-    <Compile Include="Models\Reservation.cs" />
+    <Compile Include="Models\ReservationDTO.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="ViewModels\ReservationVM.cs" />
     <Compile Include="ViewModels\Search.cs" />

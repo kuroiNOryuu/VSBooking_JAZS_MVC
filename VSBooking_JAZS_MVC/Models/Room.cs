@@ -18,6 +18,6 @@ namespace VSBooking_JAZS_MVC.Models
 
         public Hotel Hotel { get; set; }
         public ICollection<Picture> Picture { get; set; }
-        public ICollection<Reservation> Reservation { get; set; }
+        public ICollection<ReservationDTO> Reservation { get; set; }
     }
 }

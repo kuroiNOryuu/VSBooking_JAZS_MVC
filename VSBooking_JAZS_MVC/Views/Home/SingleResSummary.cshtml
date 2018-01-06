@@ -9,8 +9,9 @@
 
 @using (Html.BeginForm("ResConfirmation", "Home", FormMethod.Post))
 {
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.StartDate)
+    @Html.HiddenFor(model=> model.StartDate)
     @Html.HiddenFor(model => model.EndDate)
 
     <table class="table">
@@ -95,7 +96,6 @@
     </table>
 
     <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.Firstname, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -119,4 +119,4 @@
             </div>
         </div>
     </div>
-        }
+ }

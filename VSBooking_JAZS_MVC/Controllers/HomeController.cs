@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using VSBooking_JAZS_MVC.Models;
 using VSBooking_JAZS_MVC.ViewModels;
+using static VSBooking_JAZS_MVC.Models.ReservationDTO;
 
 namespace VSBooking_JAZS_MVC.Controllers
 {
@@ -234,24 +235,27 @@ namespace VSBooking_JAZS_MVC.Controllers
 
         public ActionResult ResConfirmation(ReservationVM reservation)
         {
+
             List<Room> rooms = new List<Room>();
+            HashSet<RoomsIdDTO> roomsId = new HashSet<RoomsIdDTO>();
             decimal totalPrice = 0;
 
             // Get reserved rooms
             for (int i = 0; i < reservation.Rooms.Count; i++)
             {
                 rooms.Add(GetRoomById(reservation.Rooms[i].IdRoom));
+                roomsId.Add(new RoomsIdDTO { IdRoom = reservation.Rooms[i].IdRoom });
                 totalPrice += rooms[i].Price;
             }
 
             // Create reservation
-            Reservation res = new Reservation
+            ReservationDTO res = new ReservationDTO
             {
                 CustomerFirstname = reservation.Firstname,
                 CustomerLastname = reservation.Lastname,
                 StartDate = reservation.StartDate,
                 EndDate = reservation.EndDate,
-                Room = rooms
+                RoomsId = roomsId
             };
 
             AddReservation(res);
@@ -338,7 +342,7 @@ namespace VSBooking_JAZS_MVC.Controllers
         }
 
         // Create a reservation
-        public bool AddReservation(Reservation reservation)
+        public bool AddReservation(ReservationDTO reservation)
         {
             string uri = baseURI + "/Reservations";
             using (HttpClient httpClient = new HttpClient())
