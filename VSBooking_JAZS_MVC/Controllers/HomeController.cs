@@ -16,6 +16,7 @@ namespace VSBooking_JAZS_MVC.Controllers
     {
         string singleRoom = "Single room";
         string doubleRoom = "Double room";
+        string baseURI = "http://localhost:49962/api";
 
         /* Search form used as home page */
         public ActionResult Search()
@@ -310,8 +311,6 @@ namespace VSBooking_JAZS_MVC.Controllers
         }
 
         //=========================================================================================================================
-
-        string baseURI = "http://localhost:49962/api";
 
         // Get the list of rooms
         public List<Room> GetRooms()
